@@ -36,3 +36,22 @@ cron.{{ env }}:
     - user: {{ env_options.user|d('root') }}
 
 {%- endfor %}
+
+{%- for interval in ['hourly', 'daily', 'weekly', 'monthly'] %}
+{%- if salt['file.directory_exists']('/etc/cron.' + interval) %}
+cron_{{ interval }}_permissions:
+  file.directory:
+    - name: /etc/cron.{{ interval }}
+    - user: root
+    - group: root
+    - mode: 0700
+{%- endif %}
+{%- endfor %}
+
+crontab_permission:
+  file.managed:
+    - name: /etc/crontab
+    - user: root
+    - group: root
+    - mode: 0600
+    - create: False
