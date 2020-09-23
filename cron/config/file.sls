@@ -55,3 +55,14 @@ crontab_permission:
     - group: root
     - mode: 0600
     - create: False
+
+cron_remove_cron.deny:
+  file.absent:
+    - name: /etc/cron.deny
+
+cron_add_cron.allow:
+  file.managed:
+    - name: /etc/cron.allow
+    - user: root
+    - group: root
+    - mode: 600
