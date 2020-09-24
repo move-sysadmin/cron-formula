@@ -75,3 +75,14 @@ cron_add_cron.allow:
     - user: root
     - group: root
     - mode: 600
+
+at_remove_at.deny:
+  file.absent:
+    - name: /etc/at.deny
+
+at_add_at.allow:
+  file.managed:
+    - name: /etc/at.allow
+    - user: root
+    - group: root
+    - mode: 600
