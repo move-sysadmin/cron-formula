@@ -56,6 +56,15 @@ crontab_permission:
     - mode: 0600
     - create: False
 
+{%- if salt['file.directory_exists']('/etc/cron.d') %}
+cron.d_permissions:
+  file.directory:
+    - name: /etc/cron.d
+    - user: root
+    - group: root
+    - mode: 0700
+{%- endif %}
+
 cron_remove_cron.deny:
   file.absent:
     - name: /etc/cron.deny
