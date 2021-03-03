@@ -75,6 +75,12 @@ cron_add_cron.allow:
     - user: root
     - group: root
     - mode: 600
+{% if "allow" in cron %}
+    - contents:
+{% for user in cron.allow %}
+      - {{ user }}
+{% endfor %}
+{% endif %}
 
 at_remove_at.deny:
   file.absent:
